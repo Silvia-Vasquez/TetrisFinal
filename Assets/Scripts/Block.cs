@@ -75,7 +75,7 @@ public class Block : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-           
+         
 
             transform.Rotate(0, 0, 90);
 
