@@ -16,6 +16,9 @@ public class Game : MonoBehaviour {
     public int ThreeLine = 300;
     public int FourLine = 1200;
 
+    public int currentLevel = 0;
+    private int LinesClearedTotal = 0;
+
     public Text Hud_score;
 
     private int numRowsThisTurn = 0;
@@ -50,6 +53,23 @@ public class Game : MonoBehaviour {
     {
         UpdateScore();
         UpdateUI();
+        UpdateLevel();
+        UpdateSpeed();
+    }
+
+    void UpdateLevel()
+    {
+        currentLevel = LinesClearedTotal / 2;
+
+    }
+
+    void UpdateSpeed()
+    {
+
+
+
+        { }
+            
     }
 
     public void UpdateUI()
@@ -64,19 +84,24 @@ public class Game : MonoBehaviour {
             if (numRowsThisTurn == 1) {
 
                 ClearOneLine();
+                LinesClearedTotal++;
             }
             else if (numRowsThisTurn == 2) {
 
                 ClearTwoLines();
+                LinesClearedTotal += 2;
 
             } else if (numRowsThisTurn == 3) {
 
                 ClearThreeLines();
+                LinesClearedTotal += 3;
 
             } else if (numRowsThisTurn == 4) {
 
                 ClearFourLines();
+                LinesClearedTotal += 4;
             }
+
             numRowsThisTurn = 0;
         }
     }
@@ -201,7 +226,9 @@ public class Game : MonoBehaviour {
     }
     public void SpawnNextBlock()
     {
+
         GameObject nextBlock = (GameObject)Instantiate(Resources.Load(GetRandomBlock(), typeof(GameObject)), new Vector2(5.0f, 20.0f), Quaternion.identity);
+        nextBlock.GetComponent<Block>().fallTime = 1.0f - currentLevel * 0.1f;
     }
 
     public bool CheckifInside(Vector2 pos) {
